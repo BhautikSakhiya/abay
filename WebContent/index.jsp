@@ -56,7 +56,6 @@
     <div class="fright">
 		<a style="margin-right: 20px;" href="adminlogin.jsp">Login as Admin</a>
     	<a href="userlogin.jsp">Login as User</a>
-    	
 	</div>
 </div>
 </body>
