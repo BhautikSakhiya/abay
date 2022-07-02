@@ -102,7 +102,7 @@ function myFunction() {
 
   <div class="container">
     <label for="uname"><b>Enter Email</b></label>
-    <input type="text" placeholder="Enter Email" name="uname" required>
+    <input type="text" placeholder="Enter Email" name="email" required>
 
     <label for="pin"><b>Enter Password</b></label>
     <input type="password" placeholder="Enter Password" id="pin" name="password" required>
@@ -115,8 +115,8 @@ function myFunction() {
   </div>
 	<a href="registration.jsp">Create New Account?</a>
  
-    <span class="psw">Forgot <a href="forgotpassword">password?</a></span>
-  </div>
+    <span class="psw"><a href="forgotpassword.jsp">Forgot password?</a></span>
+
 </form>
 
 </body>

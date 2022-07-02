@@ -23,6 +23,7 @@ import org.apache.tomcat.util.buf.StringUtils;
 
 import dao.db;
 import dao.userdao;
+import dao.logindao;
 
 @WebServlet("/item")
 @MultipartConfig(fileSizeThreshold=1024*1024*2, // 2MB
@@ -75,12 +76,10 @@ public class item extends HttpServlet {
 	        	fileNames.add(fileName);
 	        }
 	    }
-		
-		
-	    
+	 
 		try {
 	    	con = db.getCon();
-	    	String sql= "select mobile from user";
+//	    	String sql= "select mobile from user";
 	    	s = con.createStatement();
 	    	rs = s.executeQuery("select mobile from user");
 	    	 while(rs.next()) {
@@ -88,18 +87,21 @@ public class item extends HttpServlet {
 	    		 System.out.println(rs + "========");
 	    	
 			}
-	    	ps = con.prepareStatement("insert into product(category,productname,productdetail,price,mobileno,address,userid) values(?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+	    	ps = con.prepareStatement("insert into product(category,productname,productdetail,price,mobileno,address,id) values(?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 	   			ps.setString(1, category);
 	    		ps.setString(2, productname);
 	    		ps.setString(3, productdetail);
 	    		ps.setString(4, price);
 	    		ps.setString(5, mobileno);
 	    		ps.setString(6, address);
-	    		ps.setLong(7,userdao.userid);
+	    		ps.setLong(7, logindao.id);
+	    		
+	    		rs = ps.getGeneratedKeys();
 	    		int row = ps.executeUpdate();
-	    		 rs = ps.getGeneratedKeys();
-	    		 rs.next();
-	    		 long auto_id = rs.getInt(1);
+	    		long auto_id;
+	    		rs.next();
+	    			auto_id = rs.getInt(1);
+	    		 
 	    		System.out.println(rs);
 	    		System.out.println("========Hww" + auto_id);
 	    		
@@ -120,24 +122,10 @@ public class item extends HttpServlet {
 	    			out.print("not added successfully ");
 	    		}
 	    			
-	    	} catch (ClassNotFoundException | SQLException e) {
+	    	} catch (SQLException | ClassNotFoundException e) {
 	    			// TODO Auto-generated catch block
 	    		e.printStackTrace();
 	    	} 
 	        	
 	}
 }
-
-//	private String extractFileName(Part part) {
-//		String contentDisp = part.getHeader("content-disposition");
-//		String[] items = contentDisp.split(";");
-//		for(String s : items) {
-//			if(s.trim().startsWith("fileName")) {
-//				return s.substring(s.indexOf("=")+ 2, s.length()-1);
-//			}
-//		}
-//		return "";
-//		
-//	}
-
-	
